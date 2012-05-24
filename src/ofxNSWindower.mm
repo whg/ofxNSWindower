@@ -8,52 +8,110 @@
 
 #include "ofxNSWindower.h"
 
-using namespace std;
+static ofxNSWindower* windower = NULL;
 
-ofxNSWindower::ofxNSWindower(float frameRate) {
+ofxNSWindower* ofxNSWindower::instance() {
+	if (windower == NULL) {
+		windower = new ofxNSWindower();
+	}
+	return windower;
+}
+
+ofxNSWindower::ofxNSWindower() {
 	
-//	[[OpenGLContext instance] context];
-//	
-//	Timer *timer = [[Timer alloc] init];
-//	[timer setCallbackWithObject:this function:&ofxNSWindower::loop];
-//	[timer startTimer: frameRate];
-//
-//	[timer release];
+	//get the context fired up...
+	//this will also load oF stuff
+	[OpenGLContext instance];
+	
+	ofSetDataPathRoot("../../../data/");
+	ofSeedRandom();
+	ofSetBackgroundAuto(false);	
+	
+}
+
+void ofxNSWindower::destroy() {
+	if (windower != NULL) {
+		delete windower;
+		windower = NULL;
+	}
 }
 
 ofxNSWindower::~ofxNSWindower() {
-	cout << "windower deconstrutor" << endl;
 	for (map<string, ofxNSWindow*>::iterator it = windows.begin(); it != windows.end(); it++) {
+		delete it->second;
 		windows.erase(it);
 	}
 }
 
+//all but the first arguments are optional...
+//if no name is given then a random number between 0 and 1000 is given...
+//default option is just a title, no buttons, with a framerate of 30
+void ofxNSWindower::addWindow(ofxNSWindowApp *app, string name, int options, int frameRate) {
 
-void ofxNSWindower::addWindow(ofxNSWindowApp *app, string name) {
-	
+	//if a window isn't given a name, give it a random one..
 	if (name == "") {
-		string randomstring = ofToString((int) ofRandom(1000));
-		windows[randomstring] = new ofxNSWindow(app);
+		string randomstring;
+		do {
+			randomstring = ofToString((int) ofRandom(1000));
+		} while (windows.count(randomstring));
+		windows[randomstring] = new ofxNSWindow(app, randomstring, options, frameRate);
 	}
 	else {
-		windows[name] = new ofxNSWindow(app, name);
+		windows[name] = new ofxNSWindow(app, name, options, frameRate);
 	}
-
-	
 }
 
-void ofxNSWindower::loop() {
 
-	for (map<string, ofxNSWindow*>::iterator it = windows.begin(); it != windows.end(); ++it) {
+void ofxNSWindower::deleteWindow(ofxNSWindowApp *app) {
 
-		[(*it).second->getView() renderLoop];
-
+	//this is a bit rubbish, but i think it's ok, ideally we should have the name of the app,
+	//but apps don't have names, windows do so it's a bit of weird situation.
+	//this is just a quick fix without changing ofxNSWindowApp...
+	for (map<string, ofxNSWindow*>::iterator it = windows.begin(); it != windows.end(); it++) {
+		cout << it->second->getApp() << " " << app << endl;
+		if (it->second->getApp() == app) {
+			delete it->second;
+			windows.erase(it);
+			break;
+		}
 	}
-	
-	[[[OpenGLContext instance] context] flushBuffer];
-	
 }
 
+
+//this is the equivalent to ofGetAppPtr() only we now pass a name for the specific app
+
+ofxNSWindowApp*  ofxNSWindower::getAppPtr(string name) {
+	if (windows.count(name)) {
+		return windows[name]->getApp();
+	}
+	return NULL;
+}
+
+
+//just a nice utility to see what apps we have running...
+vector<string> ofxNSWindower::getAppNames() {
+	vector<string> names;
+	for (map<string, ofxNSWindow*>::iterator it = windows.begin(); it != windows.end(); it++) {
+		names.push_back(it->first);
+	}
+	return names;
+}
+
+//tried syncronising all views at one point....
+
+//void ofxNSWindower::loop() {
+//
+//	for (map<string, ofxNSWindow*>::iterator it = windows.begin(); it != windows.end(); ++it) {
+//
+//		[(*it).second->getView() renderLoop];
+//
+//	}
+//	
+//	[[[OpenGLContext instance] context] flushBuffer];
+//	
+//}
+
+//not used...
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -68,7 +126,7 @@ void ofxNSWindower::loop() {
 
 - (void) setCallbackWithObject: (ofxNSWindower*) obj function: (func) cb {
 	callback = cb;
-	object = obj;
+	window_object = obj;
 }
 
 - (void) startTimer: (float) frameRate {
@@ -85,7 +143,7 @@ void ofxNSWindower::loop() {
 }
 
 - (void) loop {
-	(object->*callback)();
+	(window_object->*callback)();
 }
 
 @end

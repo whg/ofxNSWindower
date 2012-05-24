@@ -9,13 +9,16 @@
 
 #include <OpenGL/OpenGL.h>
 
+static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime,
+																		CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext);
 
 @implementation OpenGLView
 
 
-- (id) initWithFrame: (NSRect) frame: (ofxNSWindowApp*) app {
+- (id) initWithFrame: (NSRect) frame: (ofxNSWindowApp*) app : (int) fr {
 	
 	windowApp = app;
+	frameRate = fr;
 	[self initWithFrame:frame];
 }
 
@@ -27,10 +30,13 @@
 	if (self) {
 		
 		pixelFormat = [[OpenGLContext instance] pixelFormat];
-		
+
 		if (pixelFormat == nil) {
 			NSLog(@"OpenGLView: no pixel format");
 		}
+		
+		context = nil;
+
 	}
 	
 	//we need to do this to enable mouseMoved events
@@ -43,13 +49,63 @@
 	[self addTrackingArea:trackingArea];
 	[trackingArea release];
 	
-	setupCalled = FALSE;
 	
-	frameRate = 30;
-	[self startTimer];
+	lastFrameTime = 0;
 	
-	context = nil;
+	if (frameRate) {
+		[self startTimer];
+	}
+	
+	//framerate is 0 so we sync with the screen's refresh rate
+	else {
+		//the following has been copied and adjusted from:
+		//http://developer.apple.com/library/mac/#documentation/graphicsimaging/conceptual/OpenGL-MacProgGuide/opengl_designstrategies/opengl_designstrategies.html
+		
+		// Synchronize buffer swaps with vertical refresh rate
+    GLint swapInt = 1;
+    [[[OpenGLContext instance] context] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
+		
+    // Create a display link capable of being used with all active displays
+    CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
+		
+    // Set the renderer output callback function
+    CVDisplayLinkSetOutputCallback(displayLink, &displayLinkCallback, self);
+		
+    // Set the display link for the current renderer
+    CGLContextObj cglContext = (CGLContextObj) [[self openGLContext] CGLContextObj];
+    CGLPixelFormatObj cglPixelFormat = (CGLPixelFormatObj) [pixelFormat CGLPixelFormatObj];
+    CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext, cglPixelFormat);
+		
+    // Activate the display link
+    CVDisplayLinkStart(displayLink);
+	}
+
 	return self;
+}
+
+///////////////////////////////////////////////////////////
+//screen refresh stuff....
+
+//again... taken from the URL above...
+// This is the renderer output callback function
+static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime,
+																			CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext) {
+	
+	 return [(OpenGLView*)displayLinkContext getFrameForTime:outputTime];
+}
+
+- (CVReturn) getFrameForTime: (const CVTimeStamp*) outputTime {
+	
+	//getFrameForTime gets called on a high priority thread, so let's call renderLoop on the main thread
+	[self performSelectorOnMainThread:@selector(renderLoop) withObject:nil waitUntilDone:NO];
+
+	return kCVReturnSuccess;
+}
+
+//////////////////////////////////////////////////////////////
+
+- (void) setup {
+	windowApp->setup();
 }
 
 - (void) setApp: (ofxNSWindowApp*) app {
@@ -68,9 +124,7 @@
 			NSLog(@"OpenGLView: can't create context");
 		}
 	}
-	
-	
-	
+
 	return context;
 }
 
@@ -131,10 +185,8 @@
 
 - (void) renderLoop {
 	
-	if (!setupCalled) {
-		windowApp->setup();
-		setupCalled = TRUE;
-	}
+	realFrameRate = 1/((ofGetElapsedTimeMicros() - lastFrameTime)*0.000001);
+	
 	
 	//VERY IMPORTANT!!!
 	//we need to lock focus so that things are drawn here
@@ -156,6 +208,7 @@
 	
 	
 	frameCounter++;
+	lastFrameTime = ofGetElapsedTimeMicros();
 }
 
 - (void) setFrameRate: (float) fr {
@@ -174,14 +227,22 @@
 	return frameRate;
 }
 
+- (float) getRealFrameRate {
+	return realFrameRate;
+}
+
 - (void) startTimer {
-	timer = [NSTimer timerWithTimeInterval: 1/frameRate
+	timer = [NSTimer timerWithTimeInterval: 1.0/frameRate
 																	target:self 
 																selector:@selector(renderLoop) 
 																userInfo:nil 
 																 repeats:YES];
 	
-	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+	[[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+	
+	//also add a timer for tracking run loop so the the app doesn't freeze when
+	//the menu is being used...
+	[[NSRunLoop mainRunLoop] addTimer:timer forMode:NSEventTrackingRunLoopMode];
 }
 
 - (void) eraseTimer {
@@ -273,7 +334,6 @@
 
 
 - (void) dealloc {
-	
 	[self eraseTimer];
 	
 	[super dealloc];

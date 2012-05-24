@@ -3,7 +3,7 @@
 
 
 void testApp::setup() {
-	ofSetBackgroundAuto(false);	
+
 
 }
 
@@ -16,6 +16,8 @@ void testApp::draw() {
 
 	ofBackground(0, 125, 200);
 	
+	ofSetHexColor(0xffffff);
+	ofDrawBitmapString(ofToString(getRealFrameRate()), 10, 10);
 }
 
 

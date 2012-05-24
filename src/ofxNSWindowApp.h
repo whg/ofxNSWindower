@@ -20,7 +20,7 @@
 
 class ofxNSWindow;
 
-class ofxNSWindowApp : public ofAppBaseWindow {
+class ofxNSWindowApp : public ofAppBaseWindow, public ofBaseSoundInput, public ofBaseSoundOutput {
 	
 public:
 	ofxNSWindowApp() {
@@ -33,6 +33,7 @@ public:
 	virtual void setup() {}
 	virtual void update() {}
 	virtual void draw() {}
+	virtual void close() {}
 	
 	virtual void keyPressed(int key) {}
 	virtual void keyReleased(int key) {}
@@ -40,8 +41,8 @@ public:
 	virtual void mouseMoved(int x, int y) {}
 	virtual void mouseDragged(int x, int y, int button) {}
 	virtual void mousePressed(int x, int y, int button) {}
-	virtual void mouseReleased(){}
-	virtual void mouseReleased(int x, int y, int button ){}
+	virtual void mouseReleased() {}
+	virtual void mouseReleased(int x, int y, int button) {}
 	
 	virtual void mouseScrolled(float x, float y) {}
 	
@@ -53,11 +54,14 @@ public:
 	
 	ofPoint	getWindowPosition();
 	ofPoint	getWindowSize();
+	int getWidth();
+	int getHeight();
 	ofRectangle getFrame();
 	
 	float getFrameRate();
 	void setFrameRate(float fr);
 	int getFrameNum();
+	float getRealFrameRate();
 	
 	void setWindowSize(int w, int h);
 	void setWindowPosition(int x, int y);

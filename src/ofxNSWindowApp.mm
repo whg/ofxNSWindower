@@ -20,6 +20,14 @@ ofPoint	ofxNSWindowApp::getWindowSize(){
 	return parent->getWindowSize(); 
 }
 
+int	ofxNSWindowApp::getWidth(){ 
+	return (int) parent->getWindowSize().x; 
+}
+
+int	ofxNSWindowApp::getHeight(){ 
+	return (int) parent->getWindowSize().y; 
+}
+
 ofRectangle ofxNSWindowApp::getFrame() { 
 	return parent->getFrame();
 }
@@ -36,6 +44,10 @@ int ofxNSWindowApp::getFrameNum() {
 	return parent->getFrameNum();
 }
 
+float ofxNSWindowApp::getRealFrameRate() {
+	return parent->getRealFrameRate();
+}
+
 void ofxNSWindowApp::setWindowSize(int w, int h) {
 	parent->setWindowSize(w, h);
 }
@@ -43,3 +55,4 @@ void ofxNSWindowApp::setWindowSize(int w, int h) {
 void ofxNSWindowApp::setWindowPosition(int x, int y) {
 	parent->setWindowPosition(x, y);
 }
+

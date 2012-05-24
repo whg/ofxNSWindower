@@ -21,8 +21,11 @@ class ofxNSWindowApp;
 
 @interface OpenGLView : NSView {
 	
-	float frameRate;
-	BOOL setupCalled;
+	float realFrameRate;
+	int frameRate; //this also serves a boolean for the screen sync
+	int lastFrameTime;
+	
+	CVDisplayLinkRef displayLink; //display link for managing rendering thread
 	
 @private
 	NSOpenGLContext *context;
@@ -35,7 +38,8 @@ class ofxNSWindowApp;
 	
 }
 
-- (id) initWithFrame : (NSRect)frame : (ofxNSWindowApp*) app;
+- (id) initWithFrame : (NSRect)frame : (ofxNSWindowApp*) app : (int) fr;
+- (void) setup;
 
 - (NSOpenGLContext*) openGLContext;
 - (void) prepareOpenGL;
@@ -51,6 +55,9 @@ class ofxNSWindowApp;
 
 - (int) getFrameNum;
 - (float) getFrameRate;
+- (float) getRealFrameRate;
 
+- (CVReturn) getFrameForTime: (const CVTimeStamp*) outputTime;
 
 @end
+

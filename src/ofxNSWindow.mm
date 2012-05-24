@@ -11,57 +11,50 @@
 #include "ofxNSWindow.h"
 
 
-ofxNSWindow::ofxNSWindow(ofxNSWindowApp *app, string name, float frameRate):
+ofxNSWindow::ofxNSWindow(ofxNSWindowApp *app, string name, int options, float frameRate):
 name(name), frameRate(frameRate) {
 
 	frame = ofRectangle(100, 500, 320, 240);
 	
-	initWindow(frame, app);
-	setWindowTitle(name);
-	
 	//set the parent so we can gain information 
 	//about the window from inside the app
 	app->setParent(this);
-}
-
-//this is almost identical to the constructor above, i just wanted an optional frame argument
-//and as far as i am aware you cant have default constructors for compound types
-ofxNSWindow::ofxNSWindow(ofxNSWindowApp *app, string name, ofRectangle frame, float frameRate):
-frame(frame), name(name), frameRate(frameRate) {
+	this->app = app;
 	
-	initWindow(frame, app);
-	setWindowTitle(name);
-	
-
-	//set the parent so we can gain information 
-	//about the window from inside the app
-	app->setParent(this);
-
-}
-
-void ofxNSWindow::initWindow(ofRectangle frame, ofxNSWindowApp *app) {
-	
+	//create the window...
 	NSRect nsframe = NSMakeRect(frame.x, frame.y, frame.width, frame.height);
 	
 	window = [[NSWindow alloc] initWithContentRect:nsframe 
-																			 styleMask:NSTitledWindowMask
+																			 styleMask:options
 																				 backing:NSBackingStoreBuffered 
 																					 defer:NO];
 	
 	[window setFrameTopLeftPoint:NSMakePoint(frame.x, frame.y)];
+
+	glview = [[OpenGLView alloc] initWithFrame:nsframe :app :frameRate];
 	
-	glview = [[OpenGLView alloc] initWithFrame:nsframe :app];
-		
-	//display the window
+	windowDelegate = [[WindowDelegate alloc] init];
+	[windowDelegate setApp:app];
+	[windowDelegate setView:glview];
+	[window setDelegate:windowDelegate];
+	
+	
+	//setup and display the window
+
 	[window setContentView:glview];
+	[glview setup];
 	[window makeKeyAndOrderFront:nil];
+	
+	
+	setWindowTitle(name);
 	
 }
 
+
 ofxNSWindow::~ofxNSWindow() {
-	cout << "destructed" << endl;
 	[window release];
 	[glview release];
+	[windowDelegate release];
 }
 
 void ofxNSWindow::setWindowTitle(string title) {
@@ -83,17 +76,47 @@ int ofxNSWindow::getFrameNum() {
 	return [glview getFrameNum]; 
 }
 
+float ofxNSWindow::getRealFrameRate() {
+	return [glview getRealFrameRate];
+}
+
 void ofxNSWindow::setWindowSize(int w, int h) {
 
 	[window setContentSize:NSMakeSize(w, h)];
-//	[glview setFrameSize:NSMakeSize(w, h)];
 	[glview setFrame:NSMakeRect(0, 0, w, h)];
 	[glview prepareOpenGL];
+	
+	frame.width = w;
+	frame.height = h;
 }
 
 void ofxNSWindow::setWindowPosition(int x, int y) {
 	
 	[window setFrameTopLeftPoint:NSMakePoint(x, y)];
+	frame.x = x;
+	frame.y = y;
 }
+
+//////////////////////////////////////////////////////////////
+//NSWindow delegate implementation for close events
+
+@implementation WindowDelegate
+
+@synthesize app;
+@synthesize view;
+
+
+- (BOOL) windowShouldClose: (id) sender {
+
+	[view eraseTimer];
+	app->close();
+
+	ofxNSWindower::instance()->deleteWindow(app);
+
+	return NO;
+}
+
+
+@end
 
 

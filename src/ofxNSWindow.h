@@ -9,27 +9,28 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxNSWindower.h"
 
 #import "OpenGLView.h"
 #import <Cocoa/Cocoa.h>
 
 class ofxNSWindowApp;
 class ofxNSWindow;
+class ofxNSWindower;
 @class OpenGLView;
+@class WindowDelegate;
 
 class ofxNSWindow {
 	
 public:
 	ofxNSWindow() {}
-	ofxNSWindow(ofxNSWindowApp *app, string name="", float frameRate=30);
-	ofxNSWindow(ofxNSWindowApp *app, string name, ofRectangle frame, float frameRate);
+	ofxNSWindow(ofxNSWindowApp *app, string name="", int options=NSTitledWindowMask, float frameRate=30);
 
 	~ofxNSWindow();
-	
-	void initWindow(ofRectangle frame, ofxNSWindowApp *app);
-	
+		
 	NSWindow* getWindow() { return window; }
 	OpenGLView* getView() { return glview; }
+	ofxNSWindowApp* getApp() { return app; }
 	
 	void setWindowTitle(string title);
 	
@@ -42,6 +43,7 @@ public:
 	float getFrameRate();
 	void setFrameRate(float fr);
 	int getFrameNum();
+	float getRealFrameRate();
 	
 	void setWindowSize(int w, int h);
 	void setWindowPosition(int x, int y);
@@ -55,7 +57,25 @@ private:
 	NSWindow *window;
 	OpenGLView *glview;
 	
+	WindowDelegate *windowDelegate;
+	
 	ofxNSWindowApp *app;
 	
 };
+
+
+/////////////////////////////////////////////////
+//window delegate to handle close events
+
+@interface WindowDelegate : NSObject<NSWindowDelegate> { 
+	ofxNSWindowApp *app;
+	OpenGLView *view;
+}
+
+@property (assign) ofxNSWindowApp* app;
+@property (retain) OpenGLView* view;
+
+- (BOOL) windowShouldClose: (id) sender;
+
+@end
 
