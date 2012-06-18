@@ -5,8 +5,7 @@ With ofxNSWindower, you can create multiple OpenGL windows with a shared context
 
 * Multiple Windows
 * Mouse Scrolled Events
-* Usage of menu bars without blocking the app
-* Easier Cocoa GUIs
+* Easy Mac/Cocoa GUIs
 
 
 Usage
@@ -61,10 +60,4 @@ These are defined in `ofxNSWindowApp` so can be called in your subclassed app an
 Architecture
 ------------
 
-The architecture of an ofxNSWindower app is quite different to a standard openFrameworks app using GLUT. Apps are not created in main, but inside the application delegate, which is instantiated from the main .xib file. See the examples for more details.
-
-
-Compatibility
--------------
-
-I haven't actually upgraded to Lion yet, so I have no idea if it works on anything apart from Snow Leopard. And obviously, this will only work on OSX.
+The architecture of an ofxNSWindower app is quite different to a standard openFrameworks app using GLUT. Apps are not created in `main()`, but inside the application delegate, which is instantiated from the main .xib file. See the examples for more details.
