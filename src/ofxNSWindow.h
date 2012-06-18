@@ -47,7 +47,7 @@ public:
 	
 	void setWindowSize(int w, int h);
 	void setWindowPosition(int x, int y);
-	
+    	
 private:
 	
 	ofRectangle frame;

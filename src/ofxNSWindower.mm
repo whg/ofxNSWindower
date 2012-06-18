@@ -59,6 +59,7 @@ void ofxNSWindower::addWindow(ofxNSWindowApp *app, string name, int options, int
 	else {
 		windows[name] = new ofxNSWindow(app, name, options, frameRate);
 	}
+    
 }
 
 

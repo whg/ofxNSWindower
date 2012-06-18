@@ -63,7 +63,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 		
 		// Synchronize buffer swaps with vertical refresh rate
     GLint swapInt = 1;
-    [[[OpenGLContext instance] context] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
+    [[self openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
 		
     // Create a display link capable of being used with all active displays
     CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
@@ -97,7 +97,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 - (CVReturn) getFrameForTime: (const CVTimeStamp*) outputTime {
 	
 	//getFrameForTime gets called on a high priority thread, so let's call renderLoop on the main thread
-	[self performSelectorOnMainThread:@selector(renderLoop) withObject:nil waitUntilDone:NO];
+    //BUG FIX: waitUntilDone: needs to be YES, or other nswindows can freeze...
+	[self performSelectorOnMainThread:@selector(renderLoop) withObject:nil waitUntilDone:YES];
 
 	return kCVReturnSuccess;
 }
@@ -118,7 +119,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	if (context == nil) {
 		
 		context = [[NSOpenGLContext alloc] initWithFormat:pixelFormat 
-																				 shareContext:[[OpenGLContext instance] context]];
+                                             shareContext:[[OpenGLContext instance] context]];
 		
 		if (context == nil) {
 			NSLog(@"OpenGLView: can't create context");
@@ -187,28 +188,29 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	
 	realFrameRate = 1/((ofGetElapsedTimeMicros() - lastFrameTime)*0.000001);
 	
-	
 	//VERY IMPORTANT!!!
 	//we need to lock focus so that things are drawn here
 	//this won't make a difference with just one window
 	//but with multiple ones only one window will redraw
 	[self lockFocus];
 	
-	glClearColor(0, 0, 0, 1);
-	glClear(GL_COLOR_BUFFER_BIT);
+//	glClearColor(0, 0, 0, 1);
+//	glClear(GL_COLOR_BUFFER_BIT);
 	
 	windowApp->update();
 	
 	windowApp->draw();
-	
+
 	[[self openGLContext] flushBuffer];	
-	
+
+
 	//now unlock so we can draw to others...
 	[self unlockFocus];
 	
-	
-	frameCounter++;
+    frameCounter++;
 	lastFrameTime = ofGetElapsedTimeMicros();
+	
+
 }
 
 - (void) setFrameRate: (float) fr {

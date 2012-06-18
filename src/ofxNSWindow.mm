@@ -32,29 +32,27 @@ name(name), frameRate(frameRate) {
 	[window setFrameTopLeftPoint:NSMakePoint(frame.x, frame.y)];
 
 	glview = [[OpenGLView alloc] initWithFrame:nsframe :app :frameRate];
-	
-	windowDelegate = [[WindowDelegate alloc] init];
-	[windowDelegate setApp:app];
-	[windowDelegate setView:glview];
-	[window setDelegate:windowDelegate];
-	
-	
-	//setup and display the window
-
+//	
+//	windowDelegate = [[WindowDelegate alloc] init];
+//	[windowDelegate setApp:app];
+//	[windowDelegate setView:glview];
+//	[window setDelegate:windowDelegate];
+//	
+//	
+//	//setup and display the window
+//
 	[window setContentView:glview];
 	[glview setup];
 	[window makeKeyAndOrderFront:nil];
-	
-	
-	setWindowTitle(name);
-	
+
+	setWindowTitle(name);	
 }
 
 
 ofxNSWindow::~ofxNSWindow() {
 	[window release];
 	[glview release];
-	[windowDelegate release];
+//	[windowDelegate release];
 }
 
 void ofxNSWindow::setWindowTitle(string title) {
@@ -96,6 +94,7 @@ void ofxNSWindow::setWindowPosition(int x, int y) {
 	frame.x = x;
 	frame.y = y;
 }
+
 
 //////////////////////////////////////////////////////////////
 //NSWindow delegate implementation for close events
