@@ -46,8 +46,12 @@ public:
 	
 	virtual void mouseScrolled(float x, float y) {}
 	
+	virtual void dragEvent(ofDragInfo dragInfo) {}
+	
 	int mouseX, mouseY;	//for processing heads, and i like processing so let's keep it
 	
+	
+	///////////////////////////////////////////////////////
 	void setParent(ofxNSWindow *p) { parent = p; }
 
 	void setWindowTitle(string title);

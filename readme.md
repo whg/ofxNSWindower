@@ -35,8 +35,7 @@ To access `testApp` you can use `getAppPtr()`, in a very similar manner to norma
 Apps do not subclass `ofBaseApp`, but `ofxNSWindowApp`. This is very similar to `ofBaseApp`, but has a few differences. These are:
 
 * mouseScrolled event is added
-* dragEvent() & gotMessage() is removed
-* windowResized() is removed
+* windowResized() & gotMessage() is removed
 * exit() is now close()
 
 Also, a few of the openFrameworks functions now will not work, such as `ofGetWidth()` and other functions that presume there is only one window. I have tried to re-implement these as much as I could (I have probably forgotten a few):

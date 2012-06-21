@@ -19,7 +19,7 @@
 
 class ofxNSWindowApp;
 
-@interface OpenGLView : NSView {
+@interface OpenGLView : NSView <NSDraggingDestination> {
 	
 	float realFrameRate;
 	int frameRate; //this also serves a boolean for the screen sync

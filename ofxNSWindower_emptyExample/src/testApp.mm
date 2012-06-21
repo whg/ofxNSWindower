@@ -12,7 +12,6 @@ void testApp::update() {
 	
 }
 
-int x = 0;
 void testApp::draw() {
 
 	ofBackground(0, 125, 200);

@@ -79,9 +79,14 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     // Activate the display link
     CVDisplayLinkStart(displayLink);
 	}
+	
+	//dragging stuff, basically just allow us to register dragging...
+	[self registerForDraggedTypes:[NSArray arrayWithObjects: NSFilenamesPboardType, nil]];
 
 	return self;
 }
+
+
 
 ///////////////////////////////////////////////////////////
 //screen refresh stuff....
@@ -333,6 +338,42 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	windowApp->mouseScrolled(event.deltaX, event.deltaY);
 }
 
+
+// - - - - DRAGGING - - - - 
+
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender {
+	
+	//return drag operation copy, so that the cursor and the plus sign...
+	//i think this makes the most sense...
+	return NSDragOperationCopy;
+}
+
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender {
+	
+	NSPasteboard *pasteboard = [sender draggingPasteboard];
+	
+	//get the array of filenames, these are absolute file paths
+	NSArray *files = [pasteboard propertyListForType: NSFilenamesPboardType];
+	
+	
+	NSPoint p = [sender draggingLocation];
+	
+	ofDragInfo dragInfo;
+	dragInfo.position = ofPoint(p.x, windowApp->getHeight() - p.y);//flip positive y direction
+	
+	//now we can differentiate between links and data and other stuff like that
+	//but for our application, i don't think we need to, so
+	
+	for (NSString *o in files) {
+		dragInfo.files.push_back([o UTF8String]);
+	}
+	
+	windowApp->dragEvent(dragInfo);
+	
+	
+	return YES;
+}
 
 
 - (void) dealloc {
