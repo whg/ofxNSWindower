@@ -41,11 +41,13 @@ name(name), frameRate(frameRate) {
 //	
 //	//setup and display the window
 //
+//	ofSetAppWindow(ofPtr<ofxNSWindow>(this));
+	
 	[window setContentView:glview];
 	[glview setup];
 	[window makeKeyAndOrderFront:nil];
 
-	setWindowTitle(name);	
+	setWindowTitle(name);
 }
 
 
@@ -55,14 +57,26 @@ ofxNSWindow::~ofxNSWindow() {
 //	[windowDelegate release];
 }
 
+void ofxNSWindow::showCursor() {
+	[NSCursor unhide];
+}
+
+void ofxNSWindow::hideCursor() {
+	[NSCursor hide];
+}
+
 void ofxNSWindow::setWindowTitle(string title) {
 	
 	NSString *nstitle = [NSString	stringWithUTF8String:title.c_str()];
 	[window setTitle:nstitle];
 }
 
+string ofxNSWindow::getWindowTitle() {
+	return string([[window title] UTF8String]);
+}
+
 float ofxNSWindow::getFrameRate() { 
-	return [glview getFrameRate]; 
+	return [glview getRealFrameRate];
 }
 
 void ofxNSWindow::setFrameRate(float fr) { 
@@ -74,11 +88,11 @@ int ofxNSWindow::getFrameNum() {
 	return [glview getFrameNum]; 
 }
 
-float ofxNSWindow::getRealFrameRate() {
-	return [glview getRealFrameRate];
+float ofxNSWindow::getSetFrameRate() {
+	return [glview getFrameRate];
 }
 
-void ofxNSWindow::setWindowSize(int w, int h) {
+void ofxNSWindow::setWindowShape(int w, int h) {
 
 	[window setContentSize:NSMakeSize(w, h)];
 	[glview setFrame:NSMakeRect(0, 0, w, h)];
@@ -86,6 +100,7 @@ void ofxNSWindow::setWindowSize(int w, int h) {
 	
 	frame.width = w;
 	frame.height = h;
+	
 }
 
 void ofxNSWindow::setWindowPosition(int x, int y) {

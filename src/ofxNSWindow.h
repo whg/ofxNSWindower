@@ -10,6 +10,7 @@
 
 #include "ofMain.h"
 #include "ofxNSWindower.h"
+#include "ofAppBaseWindow.h"
 
 #import "OpenGLView.h"
 #import <Cocoa/Cocoa.h>
@@ -20,7 +21,7 @@ class ofxNSWindower;
 @class OpenGLView;
 @class WindowDelegate;
 
-class ofxNSWindow {
+class ofxNSWindow : public ofAppBaseWindow {
 	
 public:
 	ofxNSWindow() {}
@@ -32,22 +33,30 @@ public:
 	OpenGLView* getView() { return glview; }
 	ofxNSWindowApp* getApp() { return app; }
 	
-	void setWindowTitle(string title);
+	void hideCursor();
+	void showCursor();
 	
+	void setWindowPosition(int x, int y);
+	void setWindowShape(int w, int h);
+	
+	int getFrameNum();
+	float getFrameRate();
+	void setFrameRate(float fr);
+	float getSetFrameRate(); //yes, weird name but might be useful
+
 	ofPoint	getWindowPosition() { return ofPoint(frame.x, frame.y); }
 	ofPoint	getWindowSize(){ return ofPoint(frame.width, frame.height); }
 	ofRectangle getFrame() { return frame; }
+
+	int getWidth() { return getWindowSize().x; }
+	int getHeight() { return getWindowSize().y; }
 	
 	void setPos(int x, int y) { [window setFrameOrigin:NSMakePoint(x, y)]; }
 	
-	float getFrameRate();
-	void setFrameRate(float fr);
-	int getFrameNum();
-	float getRealFrameRate();
 	
-	void setWindowSize(int w, int h);
-	void setWindowPosition(int x, int y);
-    	
+	void setWindowTitle(string title);
+	string getWindowTitle();
+
 private:
 	
 	ofRectangle frame;

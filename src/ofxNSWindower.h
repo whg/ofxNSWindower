@@ -18,6 +18,8 @@
 #include <map>
 #include <string>
 
+#include "ofTypes.h"
+
 class ofxNSWindow;
 class ofxNSWindowApp;
 
@@ -35,6 +37,7 @@ public:
 	void deleteWindow(ofxNSWindowApp *app);
 
 	ofxNSWindowApp* getAppPtr(string name);
+	ofPtr<ofxNSWindow> getWindowPtr(string name);
 	
 	vector<string> getAppNames();
 	
@@ -45,7 +48,7 @@ private:
 	
 	void loop(); //this isn't currently used...saf
 	
-	map<string, ofxNSWindow*> windows;
+	map<string, ofPtr<ofxNSWindow> > windows;
 	
 };
 

@@ -37,8 +37,8 @@ void ofxNSWindower::destroy() {
 }
 
 ofxNSWindower::~ofxNSWindower() {
-	for (map<string, ofxNSWindow*>::iterator it = windows.begin(); it != windows.end(); it++) {
-		delete it->second;
+	for (map<string, ofPtr<ofxNSWindow> >::iterator it = windows.begin(); it != windows.end(); it++) {
+//		delete it->second;
 		windows.erase(it);
 	}
 }
@@ -54,10 +54,10 @@ void ofxNSWindower::addWindow(ofxNSWindowApp *app, string name, int options, int
 		do {
 			randomstring = ofToString((int) ofRandom(1000));
 		} while (windows.count(randomstring));
-		windows[randomstring] = new ofxNSWindow(app, randomstring, options, frameRate);
+		windows[randomstring] = ofPtr<ofxNSWindow>(new ofxNSWindow(app, randomstring, options, frameRate));
 	}
 	else {
-		windows[name] = new ofxNSWindow(app, name, options, frameRate);
+		windows[name] = ofPtr<ofxNSWindow>(new ofxNSWindow(app, name, options, frameRate));
 	}
     
 }
@@ -68,10 +68,10 @@ void ofxNSWindower::deleteWindow(ofxNSWindowApp *app) {
 	//this is a bit rubbish, but i think it's ok, ideally we should have the name of the app,
 	//but apps don't have names, windows do so it's a bit of weird situation.
 	//this is just a quick fix without changing ofxNSWindowApp...
-	for (map<string, ofxNSWindow*>::iterator it = windows.begin(); it != windows.end(); it++) {
+	for (map<string, ofPtr<ofxNSWindow> >::iterator it = windows.begin(); it != windows.end(); it++) {
 		cout << it->second->getApp() << " " << app << endl;
 		if (it->second->getApp() == app) {
-			delete it->second;
+//			delete it->second;
 			windows.erase(it);
 			break;
 		}
@@ -88,11 +88,17 @@ ofxNSWindowApp*  ofxNSWindower::getAppPtr(string name) {
 	return NULL;
 }
 
+ofPtr<ofxNSWindow> ofxNSWindower::getWindowPtr(string name) {
+	
+	if (windows.count(name)) {
+		return windows[name];
+	}
+}
 
 //just a nice utility to see what apps we have running...
 vector<string> ofxNSWindower::getAppNames() {
 	vector<string> names;
-	for (map<string, ofxNSWindow*>::iterator it = windows.begin(); it != windows.end(); it++) {
+	for (map<string, ofPtr<ofxNSWindow> >::iterator it = windows.begin(); it != windows.end(); it++) {
 		names.push_back(it->first);
 	}
 	return names;

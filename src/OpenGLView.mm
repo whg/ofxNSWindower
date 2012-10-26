@@ -6,6 +6,7 @@
 //
 
 #import "OpenGLView.h"
+#include "ofxNSWindow.h"
 
 #include <OpenGL/OpenGL.h>
 
@@ -83,6 +84,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	//dragging stuff, basically just allow us to register dragging...
 	[self registerForDraggedTypes:[NSArray arrayWithObjects: NSFilenamesPboardType, nil]];
 
+	
+	
 	return self;
 }
 
@@ -191,7 +194,10 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
 - (void) renderLoop {
 	
-	realFrameRate = 1/((ofGetElapsedTimeMicros() - lastFrameTime)*0.000001);
+	realFrameRate = 1.0/((ofGetElapsedTimeMicros() - lastFrameTime)*0.000001);
+	
+	// wow, what a mess
+	ofSetAppWindow(ofPtr<ofxNSWindow>(ofxNSWindower::instance()->getWindowPtr(windowApp->getParent()->getWindowTitle())));
 	
 	//VERY IMPORTANT!!!
 	//we need to lock focus so that things are drawn here
@@ -199,8 +205,6 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	//but with multiple ones only one window will redraw
 	[self lockFocus];
 	
-//	glClearColor(0, 0, 0, 1);
-//	glClear(GL_COLOR_BUFFER_BIT);
 	
 	windowApp->update();
 	
@@ -212,9 +216,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	//now unlock so we can draw to others...
 	[self unlockFocus];
 	
-    frameCounter++;
+	frameCounter++;
 	lastFrameTime = ofGetElapsedTimeMicros();
-	
 
 }
 

@@ -45,11 +45,11 @@ int ofxNSWindowApp::getFrameNum() {
 }
 
 float ofxNSWindowApp::getRealFrameRate() {
-	return parent->getRealFrameRate();
+	return parent->getFrameRate();
 }
 
 void ofxNSWindowApp::setWindowSize(int w, int h) {
-	parent->setWindowSize(w, h);
+//	parent->setWindowSize(w, h);
 }
 
 void ofxNSWindowApp::setWindowPosition(int x, int y) {

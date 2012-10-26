@@ -11,8 +11,6 @@
 
 #import "OpenGLContext.h"
 
-OpenGLContext *sharedContext = nil;
-
 @implementation OpenGLContext
 
 - (id) init {
@@ -74,12 +72,16 @@ OpenGLContext *sharedContext = nil;
 }
 
 + (OpenGLContext*) instance {
+	
+	static OpenGLContext *sharedContext = nil;
+	
 	if (sharedContext == nil) {
 		sharedContext = [[OpenGLContext alloc] init];
 		
 	}
 	return sharedContext;
 }
+
 
 
 @end

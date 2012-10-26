@@ -53,7 +53,11 @@ public:
 	
 	///////////////////////////////////////////////////////
 	void setParent(ofxNSWindow *p) { parent = p; }
-
+	ofxNSWindow* getParent() { return parent; }
+	
+	///////////////////////////////////////////////////////
+	// most of these aren't used anymore now that ofxNSWindow is derived from ofBaseAppWindow
+	
 	void setWindowTitle(string title);
 	
 	ofPoint	getWindowPosition();
