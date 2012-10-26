@@ -39,7 +39,7 @@ void ofxNSWindower::destroy() {
 ofxNSWindower::~ofxNSWindower() {
 	for (map<string, ofPtr<ofxNSWindow> >::iterator it = windows.begin(); it != windows.end(); it++) {
 //		delete it->second;
-		windows.erase(it);
+//		windows.erase(it);
 	}
 }
 
@@ -54,11 +54,12 @@ void ofxNSWindower::addWindow(ofxNSWindowApp *app, string name, int options, int
 		do {
 			randomstring = ofToString((int) ofRandom(1000));
 		} while (windows.count(randomstring));
-		windows[randomstring] = ofPtr<ofxNSWindow>(new ofxNSWindow(app, randomstring, options, frameRate));
+		name = randomstring;
 	}
-	else {
-		windows[name] = ofPtr<ofxNSWindow>(new ofxNSWindow(app, name, options, frameRate));
-	}
+
+	windows[name] = ofPtr<ofxNSWindow>(new ofxNSWindow(app, name, options, frameRate));
+	ofSetAppWindow(windows[name]);
+	windows[name]->setup();
     
 }
 

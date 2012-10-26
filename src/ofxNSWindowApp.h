@@ -20,7 +20,7 @@
 
 class ofxNSWindow;
 
-class ofxNSWindowApp : public ofAppBaseWindow, public ofBaseSoundInput, public ofBaseSoundOutput {
+class ofxNSWindowApp : public ofBaseSoundInput, public ofBaseSoundOutput {
 	
 public:
 	ofxNSWindowApp() {
@@ -55,24 +55,6 @@ public:
 	void setParent(ofxNSWindow *p) { parent = p; }
 	ofxNSWindow* getParent() { return parent; }
 	
-	///////////////////////////////////////////////////////
-	// most of these aren't used anymore now that ofxNSWindow is derived from ofBaseAppWindow
-	
-	void setWindowTitle(string title);
-	
-	ofPoint	getWindowPosition();
-	ofPoint	getWindowSize();
-	int getWidth();
-	int getHeight();
-	ofRectangle getFrame();
-	
-	float getFrameRate();
-	void setFrameRate(float fr);
-	int getFrameNum();
-	float getRealFrameRate();
-	
-	void setWindowSize(int w, int h);
-	void setWindowPosition(int x, int y);
 	
 private:
 		ofxNSWindow *parent;

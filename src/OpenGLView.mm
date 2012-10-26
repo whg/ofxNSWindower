@@ -13,6 +13,13 @@
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime,
 																		CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext);
 
+@interface OpenGLView ()
+
+- (void) renderLoop;
+- (void) setOfWindow;
+
+@end
+
 @implementation OpenGLView
 
 
@@ -196,8 +203,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	
 	realFrameRate = 1.0/((ofGetElapsedTimeMicros() - lastFrameTime)*0.000001);
 	
-	// wow, what a mess
-	ofSetAppWindow(ofPtr<ofxNSWindow>(ofxNSWindower::instance()->getWindowPtr(windowApp->getParent()->getWindowTitle())));
+//	[self setOfWindow];
 	
 	//VERY IMPORTANT!!!
 	//we need to lock focus so that things are drawn here
@@ -219,6 +225,11 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	frameCounter++;
 	lastFrameTime = ofGetElapsedTimeMicros();
 
+}
+
+- (void) setOfWindow {
+	// wow, what a mess
+	ofSetAppWindow(ofxNSWindower::instance()->getWindowPtr(windowApp->getParent()->getWindowTitle()));
 }
 
 - (void) setFrameRate: (float) fr {
@@ -362,8 +373,9 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	
 	NSPoint p = [sender draggingLocation];
 	
+	[self setOfWindow];
 	ofDragInfo dragInfo;
-	dragInfo.position = ofPoint(p.x, windowApp->getHeight() - p.y);//flip positive y direction
+	dragInfo.position = ofPoint(p.x, ofGetHeight() - p.y);//flip positive y direction
 	
 	//now we can differentiate between links and data and other stuff like that
 	//but for our application, i don't think we need to, so

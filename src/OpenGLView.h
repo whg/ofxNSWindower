@@ -44,8 +44,6 @@ class ofxNSWindowApp;
 - (NSOpenGLContext*) openGLContext;
 - (void) prepareOpenGL;
 
-- (void) renderLoop;
-
 - (void) setApp: (ofxNSWindowApp*) app;
 
 

@@ -41,20 +41,21 @@ name(name), frameRate(frameRate) {
 //	
 //	//setup and display the window
 //
-//	ofSetAppWindow(ofPtr<ofxNSWindow>(this));
 	
 	[window setContentView:glview];
-	[glview setup];
 	[window makeKeyAndOrderFront:nil];
 
 	setWindowTitle(name);
+}
+
+void ofxNSWindow::setup() {
+	[glview setup];
 }
 
 
 ofxNSWindow::~ofxNSWindow() {
 	[window release];
 	[glview release];
-//	[windowDelegate release];
 }
 
 void ofxNSWindow::showCursor() {

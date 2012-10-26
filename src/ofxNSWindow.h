@@ -26,7 +26,8 @@ class ofxNSWindow : public ofAppBaseWindow {
 public:
 	ofxNSWindow() {}
 	ofxNSWindow(ofxNSWindowApp *app, string name="", int options=NSTitledWindowMask, float frameRate=30);
-
+	void setup();
+	
 	~ofxNSWindow();
 		
 	NSWindow* getWindow() { return window; }
