@@ -40,7 +40,7 @@ Apps do not subclass `ofBaseApp`, but `ofxNSWindowApp`. This is very similar to 
 * windowResized() & gotMessage() is removed
 * exit() is now close()
 
-~~Also, a few of the openFrameworks functions now will not work, such as `ofGetWidth()`.~~ To query window properties use normal oF functions, the results of these functions will vary between windows, provided the above (and below) patch has been placed.
+~~Also, a few of the openFrameworks functions now will not work, such as `ofGetWidth()`.~~ To query window properties use normal oF functions, the results of these functions will vary between windows, provided the above (and below) patch has been applied.
 
 Architecture
 ------------
