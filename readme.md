@@ -11,6 +11,8 @@ With ofxNSWindower, you can create multiple OpenGL windows with a shared context
 Usage
 -----
 
+After the changes made in v0.2, a small patch has to be made to oF. To run this, double click on 'of_patch' in the root directory. Make sure that the addon is in the correct directory when you do this. If you see errors, read the bottom of this file.
+
 ofxNSWindower, implemented as a singleton class, handles all the windows. Each window has an app (what it draws) and also other attributes like a name and window options. To add a window you could do the following:
 
 `ofxNSWindower::instance()->addWindow(new testApp());`
@@ -38,24 +40,21 @@ Apps do not subclass `ofBaseApp`, but `ofxNSWindowApp`. This is very similar to 
 * windowResized() & gotMessage() is removed
 * exit() is now close()
 
-Also, a few of the openFrameworks functions now will not work, such as `ofGetWidth()` and other functions that presume there is only one window. I have tried to re-implement these as much as I could (I have probably forgotten a few):~~
-
-* `void setWindowTitle(string title);`
-* `ofPoint getWindowPosition();`
-* `ofPoint	getWindowSize();`
-* `int getWidth();`
-* `int getHeight();`
-* `ofRectangle getFrame();`
-* `float getFrameRate();`
-* `void setFrameRate(float fr);`
-* `int getFrameNum();`
-* `float getRealFrameRate();`
-* `void setWindowSize(int w, int h);`
-* `void setWindowPosition(int x, int y);`
-
-These are defined in `ofxNSWindowApp` so can be called in your subclassed app and are specific to that app/window.
+~~Also, a few of the openFrameworks functions now will not work, such as `ofGetWidth()`.~~ To query window properties use normal oF functions, the results of these functions will vary between windows, provided the above (and below) patch has been placed.
 
 Architecture
 ------------
 
 The architecture of an ofxNSWindower app is quite different to a standard openFrameworks app using GLUT. Apps are not created in `main()`, but inside the application delegate, which is instantiated from the main .xib file. See the examples for more details.
+
+Patch
+-----
+
+When I first created this addon I wanted to do so without needing to modify the oF core. Issue #1 hightlighted problems that couldn't be resolved without a modification. If you want to add these manually, then add:
+
+`void ofSetAppWindow(ofPtr<ofAppBaseWindow> windowPtr);` to ofAppRunner.h
+
+`void ofSetAppWindow(ofPtr<ofAppBaseWindow> windowPtr) { window = windowPtr; }` to ofAppRunner.cpp
+
+These two files can be found in libs/openFrameworks/app
+
