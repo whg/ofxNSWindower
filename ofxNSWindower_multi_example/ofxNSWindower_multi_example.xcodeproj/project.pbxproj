@@ -27,7 +27,6 @@
 		EE672EA01541E64D00229B52 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672E9D1541E64D00229B52 /* main.mm */; };
 		EE672EE31541E8D200229B52 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE672EA11541E67F00229B52 /* MainMenu.xib */; };
 		EE672F221541EA5B00229B52 /* ofxNSWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672F191541EA5B00229B52 /* ofxNSWindow.mm */; };
-		EE672F231541EA5B00229B52 /* ofxNSWindowApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672F1B1541EA5B00229B52 /* ofxNSWindowApp.mm */; };
 		EE672F241541EA5B00229B52 /* ofxNSWindower.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672F1D1541EA5B00229B52 /* ofxNSWindower.mm */; };
 		EE672F251541EA5B00229B52 /* OpenGLContext.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672F1F1541EA5B00229B52 /* OpenGLContext.mm */; };
 		EE672F261541EA5B00229B52 /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672F211541EA5B00229B52 /* OpenGLView.mm */; };
@@ -94,7 +93,6 @@
 		EE672F181541EA5B00229B52 /* ofxNSWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxNSWindow.h; path = ../../../addons/ofxNSWindower/src/ofxNSWindow.h; sourceTree = SOURCE_ROOT; };
 		EE672F191541EA5B00229B52 /* ofxNSWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ofxNSWindow.mm; path = ../../../addons/ofxNSWindower/src/ofxNSWindow.mm; sourceTree = SOURCE_ROOT; };
 		EE672F1A1541EA5B00229B52 /* ofxNSWindowApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxNSWindowApp.h; path = ../../../addons/ofxNSWindower/src/ofxNSWindowApp.h; sourceTree = SOURCE_ROOT; };
-		EE672F1B1541EA5B00229B52 /* ofxNSWindowApp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ofxNSWindowApp.mm; path = ../../../addons/ofxNSWindower/src/ofxNSWindowApp.mm; sourceTree = SOURCE_ROOT; };
 		EE672F1C1541EA5B00229B52 /* ofxNSWindower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxNSWindower.h; path = ../../../addons/ofxNSWindower/src/ofxNSWindower.h; sourceTree = SOURCE_ROOT; };
 		EE672F1D1541EA5B00229B52 /* ofxNSWindower.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ofxNSWindower.mm; path = ../../../addons/ofxNSWindower/src/ofxNSWindower.mm; sourceTree = SOURCE_ROOT; };
 		EE672F1E1541EA5B00229B52 /* OpenGLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGLContext.h; path = ../../../addons/ofxNSWindower/src/OpenGLContext.h; sourceTree = SOURCE_ROOT; };
@@ -232,7 +230,6 @@
 				EE672F181541EA5B00229B52 /* ofxNSWindow.h */,
 				EE672F191541EA5B00229B52 /* ofxNSWindow.mm */,
 				EE672F1A1541EA5B00229B52 /* ofxNSWindowApp.h */,
-				EE672F1B1541EA5B00229B52 /* ofxNSWindowApp.mm */,
 				EE672F1C1541EA5B00229B52 /* ofxNSWindower.h */,
 				EE672F1D1541EA5B00229B52 /* ofxNSWindower.mm */,
 				EE672F1E1541EA5B00229B52 /* OpenGLContext.h */,
@@ -354,7 +351,6 @@
 				EE672E9F1541E64D00229B52 /* graphicsExample.mm in Sources */,
 				EE672EA01541E64D00229B52 /* main.mm in Sources */,
 				EE672F221541EA5B00229B52 /* ofxNSWindow.mm in Sources */,
-				EE672F231541EA5B00229B52 /* ofxNSWindowApp.mm in Sources */,
 				EE672F241541EA5B00229B52 /* ofxNSWindower.mm in Sources */,
 				EE672F251541EA5B00229B52 /* OpenGLContext.mm in Sources */,
 				EE672F261541EA5B00229B52 /* OpenGLView.mm in Sources */,

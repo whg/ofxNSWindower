@@ -27,7 +27,6 @@
 		EE672EA01541E64D00229B52 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672E9D1541E64D00229B52 /* main.mm */; };
 		EE672EE31541E8D200229B52 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE672EA11541E67F00229B52 /* MainMenu.xib */; };
 		EE672F221541EA5B00229B52 /* ofxNSWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672F191541EA5B00229B52 /* ofxNSWindow.mm */; };
-		EE672F231541EA5B00229B52 /* ofxNSWindowApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672F1B1541EA5B00229B52 /* ofxNSWindowApp.mm */; };
 		EE672F241541EA5B00229B52 /* ofxNSWindower.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672F1D1541EA5B00229B52 /* ofxNSWindower.mm */; };
 		EE672F251541EA5B00229B52 /* OpenGLContext.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672F1F1541EA5B00229B52 /* OpenGLContext.mm */; };
 		EE672F261541EA5B00229B52 /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672F211541EA5B00229B52 /* OpenGLView.mm */; };
@@ -76,13 +75,13 @@
 		E45BE9770E8CC7DD009D7055 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		E45BE9790E8CC7DD009D7055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
-		E4B69B5B0A3A1756003C02F2 /* ofxNSWindower_dragdrop_example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = ofxNSWindower_dragdrop_example.app; path = /Users/whg/Code/openFrameworks_v0071/addons/ofxNSWindower/ofxNSWindower_dragdrop_example/bin/ofxNSWindower_dragdrop_example.app; sourceTree = "<absolute>"; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
 		E4C2424410CC5A17004149E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		E4C2424510CC5A17004149E2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		E4C2424610CC5A17004149E2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
+		EE3FAD9A163C190B0098A67F /* ofxNSWindower_dragdrop_exampleDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ofxNSWindower_dragdrop_exampleDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE672E991541E64D00229B52 /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testApp.h; sourceTree = "<group>"; };
 		EE672E9A1541E64D00229B52 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		EE672E9B1541E64D00229B52 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -92,7 +91,6 @@
 		EE672F181541EA5B00229B52 /* ofxNSWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxNSWindow.h; path = ../src/ofxNSWindow.h; sourceTree = SOURCE_ROOT; };
 		EE672F191541EA5B00229B52 /* ofxNSWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ofxNSWindow.mm; path = ../src/ofxNSWindow.mm; sourceTree = SOURCE_ROOT; };
 		EE672F1A1541EA5B00229B52 /* ofxNSWindowApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxNSWindowApp.h; path = ../src/ofxNSWindowApp.h; sourceTree = SOURCE_ROOT; };
-		EE672F1B1541EA5B00229B52 /* ofxNSWindowApp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ofxNSWindowApp.mm; path = ../src/ofxNSWindowApp.mm; sourceTree = SOURCE_ROOT; };
 		EE672F1C1541EA5B00229B52 /* ofxNSWindower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxNSWindower.h; path = ../src/ofxNSWindower.h; sourceTree = SOURCE_ROOT; };
 		EE672F1D1541EA5B00229B52 /* ofxNSWindower.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ofxNSWindower.mm; path = ../src/ofxNSWindower.mm; sourceTree = SOURCE_ROOT; };
 		EE672F1E1541EA5B00229B52 /* OpenGLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGLContext.h; path = ../src/OpenGLContext.h; sourceTree = SOURCE_ROOT; };
@@ -191,6 +189,7 @@
 				BB4B014C10F69532006C3DED /* addons */,
 				E45BE5980E8CC70C009D7055 /* frameworks */,
 				EE672F011541E9AD00229B52 /* resources */,
+				EE3FAD9A163C190B0098A67F /* ofxNSWindower_dragdrop_exampleDebug.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -221,7 +220,6 @@
 				EE672F181541EA5B00229B52 /* ofxNSWindow.h */,
 				EE672F191541EA5B00229B52 /* ofxNSWindow.mm */,
 				EE672F1A1541EA5B00229B52 /* ofxNSWindowApp.h */,
-				EE672F1B1541EA5B00229B52 /* ofxNSWindowApp.mm */,
 				EE672F1C1541EA5B00229B52 /* ofxNSWindower.h */,
 				EE672F1D1541EA5B00229B52 /* ofxNSWindower.mm */,
 				EE672F1E1541EA5B00229B52 /* OpenGLContext.h */,
@@ -260,7 +258,7 @@
 			);
 			name = ofxNSWindower_dragdrop_example;
 			productName = myOFApp;
-			productReference = E4B69B5B0A3A1756003C02F2 /* ofxNSWindower_dragdrop_example.app */;
+			productReference = EE3FAD9A163C190B0098A67F /* ofxNSWindower_dragdrop_exampleDebug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -343,7 +341,6 @@
 				EE672E9F1541E64D00229B52 /* testApp.mm in Sources */,
 				EE672EA01541E64D00229B52 /* main.mm in Sources */,
 				EE672F221541EA5B00229B52 /* ofxNSWindow.mm in Sources */,
-				EE672F231541EA5B00229B52 /* ofxNSWindowApp.mm in Sources */,
 				EE672F241541EA5B00229B52 /* ofxNSWindower.mm in Sources */,
 				EE672F251541EA5B00229B52 /* OpenGLContext.mm in Sources */,
 				EE672F261541EA5B00229B52 /* OpenGLView.mm in Sources */,
