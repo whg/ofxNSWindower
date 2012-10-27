@@ -7,8 +7,8 @@ testApp::testApp(Vbo *vbo) {
 
 void testApp::setup() {
 
-	setWindowSize(400, 300);
-	setWindowPosition(ofRandom(400), 400);
+	ofSetWindowShape(400, 300);
+	ofSetWindowPosition(ofRandom(400), 400);
 	rotx = roty = 0;
 }
 
@@ -24,7 +24,7 @@ void testApp::draw() {
 	ofBackground(0, 0, 0);
 	
 	ofPushMatrix();
-	ofTranslate(getWidth()/2, getHeight()/2, 0);
+	ofTranslate(ofGetWidth()/2, ofGetHeight()/2, 0);
 	ofRotateX(rotx);
 	ofRotateY(roty);
 

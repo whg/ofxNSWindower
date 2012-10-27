@@ -4,7 +4,7 @@
 
 void testApp::setup() {
 
-	setWindowSize(640, 480);
+	ofSetWindowShape(640, 480);
 
 }
 
@@ -29,8 +29,8 @@ void testApp::draw() {
 	ofPopMatrix();
 	
 	//adjust width if we need to...
-	if (getWidth() < acc_width) {
-		setWindowSize(acc_width, getHeight());
+	if (ofGetWidth() < acc_width) {
+		ofSetWindowShape(acc_width, ofGetHeight());
 	}
 
 

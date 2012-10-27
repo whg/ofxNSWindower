@@ -392,7 +392,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
 
 - (void) dealloc {
-	[self eraseTimer];
+	[timer invalidate];
 	
 	[super dealloc];
 }

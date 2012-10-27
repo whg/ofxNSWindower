@@ -38,8 +38,8 @@ void ofxNSWindower::destroy() {
 
 ofxNSWindower::~ofxNSWindower() {
 	for (map<string, ofPtr<ofxNSWindow> >::iterator it = windows.begin(); it != windows.end(); it++) {
-//		delete it->second;
-//		windows.erase(it);
+		delete it->second->getApp();
+		windows.erase(it);
 	}
 }
 
@@ -70,10 +70,9 @@ void ofxNSWindower::deleteWindow(ofxNSWindowApp *app) {
 	//but apps don't have names, windows do so it's a bit of weird situation.
 	//this is just a quick fix without changing ofxNSWindowApp...
 	for (map<string, ofPtr<ofxNSWindow> >::iterator it = windows.begin(); it != windows.end(); it++) {
-		cout << it->second->getApp() << " " << app << endl;
 		if (it->second->getApp() == app) {
-//			delete it->second;
 			windows.erase(it);
+			delete app;
 			break;
 		}
 	}

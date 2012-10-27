@@ -4,7 +4,7 @@
 
 void testApp::setup() {
 
-	setWindowSize(800, 600);
+	ofSetWindowShape(800, 600);
 	
 	font.loadFont("Arial.ttf", 80, true, true, true);
 	
@@ -30,12 +30,12 @@ void testApp::draw() {
 	ofBackground(255, 255, 255);
 	
 	ofPushMatrix();
-	ofTranslate(pos.x + getWindowSize().x/2, pos.y + getWindowSize().y/2, 0);
+	ofTranslate(pos.x + ofGetWidth()/2, pos.y + ofGetHeight()/2, 0);
 
 	for (int i = 0; i < 20; i++) {
 		ofTranslate(0, 0, 5);
-		ofRotateY(ofDegToRad(getFrameNum()*speed));
-		ofRotateZ(ofDegToRad(getFrameNum()*speed*0.3));
+		ofRotateY(ofDegToRad(ofGetFrameNum()*speed));
+		ofRotateZ(ofDegToRad(ofGetFrameNum()*speed*0.3));
 		ofSetColor(colcounter, 150);
 		font.drawString(text, -font.stringWidth(text)/2, 0);
 		
@@ -44,8 +44,8 @@ void testApp::draw() {
 	
 	ofPopMatrix();
 	
-	pos.x = cos(ofDegToRad(getFrameNum()))*100;
-	pos.y = sin(ofDegToRad(getFrameNum()))*100;
+	pos.x = cos(ofDegToRad(ofGetFrameNum()))*100;
+	pos.y = sin(ofDegToRad(ofGetFrameNum()))*100;
 	
 	colcounter+= (colflip ? 1 : -1);
 	if (colcounter >= 170 || colcounter <= 0) {

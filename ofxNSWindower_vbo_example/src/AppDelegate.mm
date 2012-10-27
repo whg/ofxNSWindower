@@ -13,9 +13,9 @@
 	vbo = new Vbo();
 	
 	//pass the vbo to the different windows...
-	ofxNSWindower::instance()->addWindow(new testApp(vbo), "one");
-	ofxNSWindower::instance()->addWindow(new testApp(vbo), "two");
-	ofxNSWindower::instance()->addWindow(new testApp(vbo), "three");
+	ofxNSWindower::instance()->addWindow(new testApp(vbo), "one", NSTitledWindowMask|NSClosableWindowMask);
+	ofxNSWindower::instance()->addWindow(new testApp(vbo), "two", NSTitledWindowMask|NSClosableWindowMask);
+	ofxNSWindower::instance()->addWindow(new testApp(vbo), "three", NSTitledWindowMask|NSClosableWindowMask);
 	
 }
 

@@ -33,17 +33,21 @@ name(name), frameRate(frameRate) {
 
 	glview = [[OpenGLView alloc] initWithFrame:nsframe :app :frameRate];
 //	
-//	windowDelegate = [[WindowDelegate alloc] init];
-//	[windowDelegate setApp:app];
-//	[windowDelegate setView:glview];
-//	[window setDelegate:windowDelegate];
-//	
+
+//
 //	
 //	//setup and display the window
 //
 	
 	[window setContentView:glview];
 	[window makeKeyAndOrderFront:nil];
+	[glview release];
+	
+	windowDelegate = [[WindowDelegate alloc] init];
+	[windowDelegate setApp:app];
+	[windowDelegate setView:[window contentView]];
+	[window setDelegate:windowDelegate];
+	[window setReleasedWhenClosed:YES];
 
 	setWindowTitle(name);
 }
@@ -52,10 +56,12 @@ void ofxNSWindow::setup() {
 	[glview setup];
 }
 
-
+//windows should be close with the close button
 ofxNSWindow::~ofxNSWindow() {
-	[window release];
-	[glview release];
+//	[[window contentView] release];
+//	[window close];
+//	[window release];
+	[windowDelegate release];
 }
 
 void ofxNSWindow::showCursor() {
@@ -128,7 +134,7 @@ void ofxNSWindow::setWindowPosition(int x, int y) {
 
 	ofxNSWindower::instance()->deleteWindow(app);
 
-	return NO;
+	return YES;
 }
 
 

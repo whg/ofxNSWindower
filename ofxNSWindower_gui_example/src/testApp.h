@@ -8,6 +8,7 @@ class testApp : public ofxNSWindowApp {
 
 public:
 	testApp() {}
+	~testApp() { cout << "test app deconstructed" << endl; }
 	
 	void setup();
 	void update();
