@@ -12,9 +12,10 @@
 
 
 ofxNSWindow::ofxNSWindow(ofxNSWindowApp *app, string name, int options, float frameRate):
-name(name), frameRate(frameRate) {
+name(name), frameRate(frameRate), isFullscreen(false) {
 
 	frame = ofRectangle(100, 500, 320, 240);
+	oframe = ofRectangle(100, 500, 320, 240); //used when we go fullscreen
 	
 	//set the parent so we can gain information 
 	//about the window from inside the app
@@ -32,12 +33,8 @@ name(name), frameRate(frameRate) {
 	[window setFrameTopLeftPoint:NSMakePoint(frame.x, frame.y)];
 
 	glview = [[OpenGLView alloc] initWithFrame:nsframe :app :frameRate];
-//	
 
-//
-//	
-//	//setup and display the window
-//
+	//setup and display the window
 	
 	[window setContentView:glview];
 	[window makeKeyAndOrderFront:nil];
@@ -115,6 +112,34 @@ void ofxNSWindow::setWindowPosition(int x, int y) {
 	[window setFrameTopLeftPoint:NSMakePoint(x, y)];
 	frame.x = x;
 	frame.y = y;
+}
+
+void	ofxNSWindow::setFullscreen(bool fullscreen){
+	
+	
+	if(fullscreen) {
+		NSScreen *screen = [NSScreen mainScreen];
+		[glview enterFullScreenMode:screen withOptions:nil];
+		NSRect f = [screen frame];
+		[glview setFrame:f];
+		oframe = frame;
+		frame.set(0, 0, f.size.width, f.size.height);
+	}
+	else {
+		[glview exitFullScreenModeWithOptions:nil];
+		[glview setFrame:NSMakeRect(0, 0, oframe.width, oframe.height)];
+		frame = oframe;
+	}
+
+	[glview prepareOpenGL];
+	[window makeFirstResponder:glview];
+
+	isFullscreen = fullscreen;
+}
+
+void	ofxNSWindow::toggleFullscreen(){
+
+	setFullscreen(!isFullscreen);
 }
 
 

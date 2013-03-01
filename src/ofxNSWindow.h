@@ -54,15 +54,18 @@ public:
 	
 	void setPos(int x, int y) { [window setFrameOrigin:NSMakePoint(x, y)]; }
 	
+	void	setFullscreen(bool fullscreen);
+	void	toggleFullscreen();
 	
 	void setWindowTitle(string title);
 	string getWindowTitle();
 
 private:
 	
-	ofRectangle frame;
+	ofRectangle frame, oframe;
 	string name;
 	float frameRate;
+	bool isFullscreen;
 	
 	NSWindow *window;
 	OpenGLView *glview;
