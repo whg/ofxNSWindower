@@ -25,7 +25,10 @@ ofxNSWindower::ofxNSWindower() {
 	
 	ofSetDataPathRoot("../../../data/");
 	ofSeedRandom();
-	ofSetBackgroundAuto(false);	
+	ofSetBackgroundAuto(false);
+    
+    //so we can call ofDrawBitmapString()
+    ofSetDrawBitmapMode(OF_BITMAPMODE_SIMPLE);
 	
 }
 
