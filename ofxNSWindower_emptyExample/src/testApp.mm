@@ -4,7 +4,6 @@
 
 void testApp::setup() {
 
-
 }
 
 void testApp::update() {
@@ -17,7 +16,7 @@ void testApp::draw() {
 	ofBackground(0, 125, 200);
 	
 	ofSetHexColor(0xffffff);
-	ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 10);
+	ofDrawBitmapString(ofToString(this->getParent()->getFrameRate()), 10, 10);
 
 }
 
