@@ -23,7 +23,15 @@ ofxNSWindower::ofxNSWindower() {
 	//this will also load oF stuff
 	[OpenGLContext instance];
 	
-	ofSetDataPathRoot("../../../data/");
+	
+    if(ofGetVersionMinor() >= 8) {
+        ofSetDataPathRoot("data/");
+    }
+    else {
+        ofSetDataPathRoot("../../../data/");
+    }
+    
+    
 	ofSeedRandom();
 	ofSetBackgroundAuto(false);
     
