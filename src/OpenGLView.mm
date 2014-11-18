@@ -287,12 +287,14 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	
 	NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
 	windowApp->mousePressed(p.x, self.frame.size.height - p.y, 0);
+    ofNotifyMousePressed(p.x, self.frame.size.height - p.y, 0);
 }
 
 - (void) mouseDragged: (NSEvent*) event {
 	
 	NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
 	windowApp->mouseDragged(p.x, self.frame.size.height - p.y, 0);
+    ofNotifyMouseDragged(p.x, self.frame.size.height - p.y, 0);
 }
 
 - (void) mouseUp: (NSEvent*) event {
@@ -300,6 +302,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
 	windowApp->mouseReleased(p.x, self.frame.size.height - p.y, 0);
 	windowApp->mouseReleased();
+
+    ofNotifyMouseReleased(p.x, self.frame.size.height - p.y, 0);
 }
 
 // - - - - RIGHT MOUSE BUTTON - - - - 
@@ -308,12 +312,14 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	
 	NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
 	windowApp->mousePressed(p.x, self.frame.size.height - p.y, 1);
+    ofNotifyMousePressed(p.x, self.frame.size.height - p.y, 1);
 }
 
 - (void) rightMouseDragged: (NSEvent*) event {
 	
 	NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
 	windowApp->mouseDragged(p.x, self.frame.size.height - p.y, 1);
+    ofNotifyMouseDragged(p.x, self.frame.size.height - p.y, 0);
 }
 
 - (void) rightMouseUp: (NSEvent*) event {
@@ -321,6 +327,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	NSPoint p = [self convertPoint:[event locationInWindow] fromView:nil];
 	windowApp->mouseReleased(p.x, self.frame.size.height - p.y, 1);
 	windowApp->mouseReleased();
+    ofNotifyMouseReleased(p.x, self.frame.size.height - p.y, 0);
 }
 
 - (void) mouseMoved: (NSEvent*) event {
@@ -329,6 +336,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	windowApp->mouseX = p.x;
 	windowApp->mouseY = self.frame.size.height - p.y;
 	windowApp->mouseMoved(p.x, self.frame.size.height - p.y);
+    ofNotifyMouseMoved(p.x, self.frame.size.height - p.y);
 }
 
 // - - - - KEYS - - - - 
@@ -337,12 +345,14 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	
 	unichar c = [[event characters] characterAtIndex:0];
 	windowApp->keyPressed(c);
+    ofNotifyKeyPressed(c);
 }
 
 - (void) keyUp: (NSEvent*) event {
 	
 	unichar c = [[event characters] characterAtIndex:0];
 	windowApp->keyReleased(c);
+    ofNotifyKeyReleased(c);
 }
 
 // - - - - SCROLLWHEEL - - - -
