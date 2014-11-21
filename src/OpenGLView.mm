@@ -203,7 +203,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 	
 	realFrameRate = 1.0/((ofGetElapsedTimeMicros() - lastFrameTime)*0.000001);
 	
-//	[self setOfWindow];
+	[self setOfWindow];
 	
 	//VERY IMPORTANT!!!
 	//we need to lock focus so that things are drawn here
