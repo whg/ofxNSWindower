@@ -32,8 +32,7 @@ name(name), frameRate(frameRate), isFullscreen(false) {
 	
 	[window setFrameTopLeftPoint:NSMakePoint(frame.x, frame.y)];
 
-	glview = [[OpenGLView alloc] initWithFrame:nsframe :app :frameRate];
-
+    glview = [[OpenGLView alloc] initWithFrame:nsframe windowApp:app frameRate:frameRate];
 	//setup and display the window
 	
 	[window setContentView:glview];

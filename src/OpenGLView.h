@@ -38,7 +38,7 @@ class ofxNSWindowApp;
 	
 }
 
-- (id) initWithFrame : (NSRect)frame : (ofxNSWindowApp*) app : (int) fr;
+- (id) initWithFrame: (NSRect) frame windowApp: (ofxNSWindowApp*) app frameRate: (int) fr;
 - (void) setup;
 
 - (NSOpenGLContext*) openGLContext;

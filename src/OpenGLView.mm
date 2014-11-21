@@ -23,11 +23,11 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 @implementation OpenGLView
 
 
-- (id) initWithFrame: (NSRect) frame: (ofxNSWindowApp*) app : (int) fr {
+- (id) initWithFrame: (NSRect) frame windowApp: (ofxNSWindowApp*) app frameRate: (int) fr {
 	
 	windowApp = app;
 	frameRate = fr;
-	[self initWithFrame:frame];
+	return [self initWithFrame:frame];
 }
 
 
